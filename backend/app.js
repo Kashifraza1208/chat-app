@@ -1,5 +1,5 @@
+const { app } = require("./socket/socket");
 const express = require("express");
-const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const errorMiddleWare = require("./middleware/error");
@@ -37,16 +37,13 @@ app.use("/api/auth", authRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/users", userRoute);
 
-// app.use("/api/v1", conversationRoute);
-
 //=============================for live api check===============================
 
-//
-// app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+});
 
 // ================================================================
 
@@ -63,4 +60,4 @@ app.set("trust proxy", 1);
 //MidleWare For Error
 app.use(errorMiddleWare);
 
-module.exports = app;
+module.exports = { app };

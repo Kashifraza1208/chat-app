@@ -1,10 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import GenderCheckbox from "./GenderCheckbox";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { SignUpUser, clearErrors } from "../../redux/action/userAction";
-import toast from "react-hot-toast";
-import Loader from "../../components/loader/Loader";
+import { Link } from "react-router-dom";
+import useSignup from "../../components/hooks/useSignup";
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -15,12 +12,7 @@ const SignUp = () => {
     gender: "",
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { loading, error, isAuthenticated } = useSelector(
-    (state) => state.user
-  );
+  const { loading, signup } = useSignup();
 
   const handleCheckBox = (gender) => {
     setData({ ...data, gender });
@@ -30,21 +22,10 @@ const SignUp = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(SignUpUser(data));
+    await signup(data);
   };
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-    if (isAuthenticated) {
-      navigate("/");
-      toast.success("SignUp Successfully");
-    }
-  }, [dispatch, isAuthenticated, navigate, error]);
 
   return (
     <Fragment>

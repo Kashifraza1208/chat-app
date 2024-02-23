@@ -3,23 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 
-import { Provider } from "react-redux";
-import store from "./redux/store";
-
-import { positions, transitions, Provider as AlertProvider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
-
-const options = {
-  timeout: 5000,
-  positions: positions.BOTTOM_CENTER,
-  transitions: transitions.SCALE,
-};
+import { SocketContextProvider } from "./components/context/socketContext";
+import { AuthContextProvider } from "./components/context/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <AlertProvider template={AlertTemplate} {...options}>
+  <AuthContextProvider>
+    <SocketContextProvider>
       <App />
-    </AlertProvider>
-  </Provider>
+    </SocketContextProvider>
+  </AuthContextProvider>
 );

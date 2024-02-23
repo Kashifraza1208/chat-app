@@ -1,15 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
+
 import { useConversation } from "../zustand/useConversation";
 import { extractTime } from "../../utils/extractTime";
+import { useAuthContext } from "../context/AuthContext";
 
 const Message = ({ message }) => {
-  const { user } = useSelector((state) => state.user);
+  const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
-  const fromMe = message?.senderId === user?._id; //means check authenticated user
+  const fromMe = message?.senderId === authUser?._id; //means check authenticated user
   const chatClassName = fromMe ? "chat-end" : "chat-start";
-  const profilePic = fromMe ? user.profilePic : selectedConversation.profilePic;
+  const profilePic = fromMe
+    ? authUser.profilePic
+    : selectedConversation.profilePic;
   const bubbleBgColor = fromMe ? "bg-blue-500" : "";
+
+  const shakeClass = message.shouldShake ? "shake" : "";
 
   return (
     <div className={`chat ${chatClassName}`}>
@@ -18,7 +23,9 @@ const Message = ({ message }) => {
           <img src={profilePic} alt="" />
         </div>
       </div>
-      <div className={`chat-bubble text-white ${bubbleBgColor}`}>
+      <div
+        className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass} pb-2`}
+      >
         {message.message}
       </div>
       <div

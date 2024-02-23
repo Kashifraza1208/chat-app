@@ -1,38 +1,18 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { clearErrors, login } from "../../redux/action/userAction";
-
-import toast from "react-hot-toast";
-
-import Loader from "../../components/loader/Loader.js";
+import useLogin from "../../components/hooks/useLogin";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.user
-  );
 
-  const handleSubmit = (e) => {
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ username, password }));
+    await login(username, password);
   };
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-
-    if (isAuthenticated) {
-      navigate("/");
-      toast.success("Login Successfully");
-    }
-  }, [isAuthenticated, navigate, error, dispatch]);
 
   return (
     <Fragment>

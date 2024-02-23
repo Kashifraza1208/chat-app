@@ -1,15 +1,14 @@
 import React from "react";
 
 import { BiLogOut } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/action/userAction";
 import toast from "react-hot-toast";
+import useLogout from "../hooks/useLogout";
 
 const LogoutButton = () => {
-  const dispatch = useDispatch();
+  const { logout } = useLogout();
 
-  const handleLogoutButton = () => {
-    dispatch(logout());
+  const handleLogoutButton = async () => {
+    await logout();
     toast.success("Logout Successfully");
   };
 

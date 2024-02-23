@@ -44,7 +44,7 @@ exports.login = catchAsyncError(async (req, res, next) => {
   if (!isPasswordMatch) {
     return next(new ErrorHandler("Invalid Username or Password", 401));
   }
-  console.log("user data======>", user);
+
   sendToken(user, 200, res);
 });
 

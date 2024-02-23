@@ -1,5 +1,6 @@
 const app = require("./app.js");
 const Connection = require("./config/database.js");
+const { server } = require("./socket/socket.js");
 
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/config.env" });
@@ -15,7 +16,7 @@ process.on("uncaughtException", (err) => {
 
 Connection();
 
-const server = app.listen(process.env.PORT, () => {
+const serverConnection = server.listen(process.env.PORT, () => {
   console.log(`Server is running successfully on Port ${process.env.PORT}`);
 });
 
