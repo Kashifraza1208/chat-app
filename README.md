@@ -13,6 +13,7 @@
 - **Authentication/Authorization:** JWT (JSON Web Tokens)
 - **Real-time Communication:** Socket.io
 - **State Management:** Zustand
+- **Search Functionality:** User can select chart using full name
 - **Deployment:** Render.com
 - **Version Control:** Git
 
